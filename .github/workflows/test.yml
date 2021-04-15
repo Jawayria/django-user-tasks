@@ -14,7 +14,8 @@ jobs:
     - name: setup python
       uses: actions/setup-python@v2
       with:
-        python-version: ${{ matrix.python-version }}
+        fetch-depth: 0
+        python-version: '3.8'
     - name: Installing Homebrew
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
@@ -31,9 +32,7 @@ jobs:
         brew install git-chglog
     - name: Determine Version
       id: gitversion
-      run: |
-        brew install gitversion
-        GitVersion /showvariable MajorMinorPatch
+      uses: gittools/actions/gitversion/execute@v0.9.7
     - name: Tag the commit
       run: |
         echo "Version: ${{ steps.gitversion.outputs.MajorMinorPatch }}"
