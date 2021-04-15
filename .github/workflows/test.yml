@@ -31,11 +31,11 @@ jobs:
         brew install git-chglog
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v0.9.7
+      id: gitversion
       with:
         versionSpec: '5.x'
-    - name: Determine Version
-      id: gitversion
-      uses: gittools/actions/gitversion/execute@v0.9.7
+      run: |
+        GitVersion /showvariable MajorMinorPatch
     - name: Tag the commit
       run: |
         echo "Version: ${{ steps.gitversion.outputs.MajorMinorPatch }}"
