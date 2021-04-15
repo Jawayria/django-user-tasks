@@ -16,6 +16,8 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Installing Homebrew
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
       run: |
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
         test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
