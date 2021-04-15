@@ -25,5 +25,20 @@ jobs:
         echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
         echo "::add-path::/home/linuxbrew/.linuxbrew/bin"
         brew --version
-    - name: Verify Homebrew's Installation
-      run: brew --version
+    - name: Install git-chglog
+      run: |
+        brew tap git-chglog/git-chglog
+        brew install git-chglog
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.7
+      with:
+        versionSpec: '5.x'
+    - name: Determine Version
+      id: gitversion
+      uses: gittools/actions/gitversion/execute@v0.9.7
+    - name: Tag the commit
+      run: |
+        echo "Version: ${{ steps.gitversion.outputs.MajorMinorPatch }}"
+        git tag ${{ steps.gitversion.outputs.MajorMinorPatch }}
+    - name: Get Changelog
+      run: git-chglog
