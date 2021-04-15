@@ -31,9 +31,10 @@ jobs:
         brew install git-chglog
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v0.9.7
-      id: gitversion
       with:
         versionSpec: '5.x'
+    - name: Get Version
+      id: gitversion
       run: |
         GitVersion /showvariable MajorMinorPatch
     - name: Tag the commit
