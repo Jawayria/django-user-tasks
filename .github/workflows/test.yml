@@ -43,6 +43,21 @@ jobs:
         echo "Version: ${{ steps.gitversion.outputs.MajorMinorPatch }}"
         git tag ${{ steps.gitversion.outputs.MajorMinorPatch }}
     - name: Get Changelog
-      run: git-chglog -o CHANGELOG.md
+      run: git-chglog $(git describe --tags $(git rev-list --tags --max-count=1)) -o CHANGELOG.md
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        tag_name: ${{ steps.gitversion.outputs.MajorMinorPatch }}
+        release_name: Release ${{ steps.gitversion.outputs.MajorMinorPatch }}
+        body-path: CHANGELOG.md
+        draft: false
+        prerelease: false
     - name: create pull request
       uses: peter-evans/create-pull-request@v3
+      with:
+        commit-message: 'docs: Bump the Version and update Changelogs'
+        branch: Update Changelogs
+        title: Upgrade the version
