@@ -45,13 +45,4 @@ jobs:
     - name: Get Changelog
       run: git-chglog -o CHANGELOG.md
     - name: create pull request
-      env:
-        GITHUB_TOKEN: ${{ secrets.REQUIREMENTS_BOT_GITHUB_TOKEN }}
-        GITHUB_USER_EMAIL: ${{ secrets.REQUIREMENTS_BOT_GITHUB_EMAIL }}
-      run: |
-        cd $GITHUB_WORKSPACE/testeng-ci
-        python -m jenkins.pull_request_creator --repo-root=$GITHUB_WORKSPACE \
-        --target-branch="${{ env.target_branch }}" --base-branch-name="Update Changelogs" \
-        --commit-message="Updating Changelogs for next version" --pr-title="Changelogs Update" \
-        --pr-body="Bump the version and update changelogs" \
-        --user-reviewers="" --team-reviewers="arbi-bom" --delete-old-pull-requests
+      uses: peter-evans/create-pull-request@v3
