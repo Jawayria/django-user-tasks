@@ -43,7 +43,10 @@ jobs:
         echo "Version: ${{ steps.gitversion.outputs.MajorMinorPatch }}"
         git tag ${{ steps.gitversion.outputs.MajorMinorPatch }}
     - name: Get Changelog
-      run: git-chglog $(git describe --tags $(git rev-list --tags --max-count=1)) | cat - CHANGELOG.md > temp && mv temp CHANGELOG.md
+      id: changelogs
+      run: |
+        git-chglog $(git describe --tags $(git rev-list --tags --max-count=1)) | cat - CHANGELOG.md > temp && mv temp CHANGELOG.md
+        echo "::set-output name=logs::$(git-chglog $(git describe --tags $(git rev-list --tags --max-count=1)))\n"
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -52,7 +55,7 @@ jobs:
       with:
         tag_name: ${{ steps.gitversion.outputs.MajorMinorPatch }}
         release_name: Release ${{ steps.gitversion.outputs.MajorMinorPatch }}
-        body_path: CHANGELOG.md
+        body: ${{ steps.changelogs.outputs.logs }}
         draft: false
         prerelease: false
     - name: create pull request
