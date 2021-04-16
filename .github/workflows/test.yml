@@ -43,7 +43,7 @@ jobs:
         echo "Version: ${{ steps.gitversion.outputs.MajorMinorPatch }}"
         git tag ${{ steps.gitversion.outputs.MajorMinorPatch }}
     - name: Get Changelog
-      run: git-chglog $(git describe --tags $(git rev-list --tags --max-count=1)) -o CHANGELOG.md
+      run: git-chglog -o CHANGELOG.md $(git describe --tags $(git rev-list --tags --max-count=1))
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
