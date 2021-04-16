@@ -43,12 +43,12 @@ jobs:
         echo "Version: ${{ steps.gitversion.outputs.MajorMinorPatch }}"
         git tag ${{ steps.gitversion.outputs.MajorMinorPatch }}
     - name: Get Changelog
-      run: git-chglog -o CHANGELOG.md $(git describe --tags $(git rev-list --tags --max-count=1))
+      run: git-chglog $(git describe --tags $(git rev-list --tags --max-count=1)) | cat - CHANGELOG.md > temp && mv temp CHANGELOG.md
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ steps.gitversion.outputs.MajorMinorPatch }}
         release_name: Release ${{ steps.gitversion.outputs.MajorMinorPatch }}
