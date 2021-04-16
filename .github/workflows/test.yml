@@ -52,12 +52,12 @@ jobs:
       with:
         tag_name: ${{ steps.gitversion.outputs.MajorMinorPatch }}
         release_name: Release ${{ steps.gitversion.outputs.MajorMinorPatch }}
-        body-path: CHANGELOG.md
+        body_path: CHANGELOG.md
         draft: false
         prerelease: false
     - name: create pull request
       uses: peter-evans/create-pull-request@v3
       with:
         commit-message: 'docs: Bump the Version and update Changelogs'
-        branch: Update Changelogs
+        branch: update-changelogs
         title: Upgrade the version
