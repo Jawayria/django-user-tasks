@@ -10,13 +10,16 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
+
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
+
     - name: setup python
       uses: actions/setup-python@v2
       with:
         python-version: '3.8'
+
     - name: Installing Homebrew
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
@@ -27,26 +30,35 @@ jobs:
         echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
         echo "::add-path::/home/linuxbrew/.linuxbrew/bin"
         brew --version
+
     - name: Install git-chglog
       run: |
         brew tap git-chglog/git-chglog
         brew install git-chglog
+
     - name: Install git-version
       uses: gittools/actions/gitversion/setup@v0.9.7
       with:
         versionSpec: '5.x'
+
+    - name: Install pandoc
+      run: brew install pandoc
+
     - name: Determine Version
       id: gitversion
       uses: gittools/actions/gitversion/execute@v0.9.7
+
     - name: Tag the commit
       run: |
         echo "Version: ${{ steps.gitversion.outputs.MajorMinorPatch }}"
         git tag ${{ steps.gitversion.outputs.MajorMinorPatch }}
+
     - name: Get Changelog
       id: changelogs
       run: |
-        git-chglog $(git describe --tags $(git rev-list --tags --max-count=1)) | cat - CHANGELOG.md > temp && mv temp CHANGELOG.md
         git-chglog -o temp.md $(git describe --tags $(git rev-list --tags --max-count=1))
+        pandoc temp.md -f markdown_strict -t rst| cat - CHANGELOG.rst > temp && mv temp CHANGELOG.rst
+
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -58,6 +70,10 @@ jobs:
         body_path: temp.md
         draft: false
         prerelease: false
+
+    - name: delete temp file
+      run: rm temp.md
+
     - name: create pull request
       uses: peter-evans/create-pull-request@v3
       with:
