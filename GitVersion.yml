@@ -1,8 +1,9 @@
-branches: {}
+mode: Mainline
 major-version-bump-message: '\s?(breaking|major|build)'
 minor-version-bump-message: '\s?(feature|feat|minor)'
-patch-version-bump-message: '\s?(fix|patch)'
+patch-version-bump-message: '\s^(?!docs|chore|ci|style|refactor|perf|test)'
 no-bump-message: '\s?(docs|chore|ci|style|refactor|perf|test)'
+branches: {}
 ignore:
   sha: []
 merge-message-formats: {}
