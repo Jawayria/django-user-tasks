@@ -1,7 +1,8 @@
 branches: {}
 major-version-bump-message: '\s?(breaking|major|build)'
-minor-version-bump-message: '\+semver:\s?(feature|minor)'
-patch-version-bump-message: '\+semver:\s?(fix|patch)'
+minor-version-bump-message: '\s?(feature|feat|minor)'
+patch-version-bump-message: '\s?(fix|patch)'
+no-bump-message: '\s?(docs|chore|ci|style|refactor|perf|test)'
 ignore:
   sha: []
 merge-message-formats: {}
