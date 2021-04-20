@@ -11,6 +11,7 @@ Docs
 
 -  resolved error in logs
 -  update
+
 `4.0.0 <https://github.com/edx/django-user-tasks/compare/3.0.0...4.0.0>`__ (2021-04-19)
 ---------------------------------------------------------------------------------------
 
