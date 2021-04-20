@@ -1,3 +1,25 @@
+`4.0.0 <https://github.com/edx/django-user-tasks/compare/3.0.0...4.0.0>`__ (2021-04-19)
+---------------------------------------------------------------------------------------
+
+Build
+~~~~~
+
+-  added pandoc in workflow
+
+Config
+~~~~~~
+
+-  Testing Mainline mode
+
+Docs
+~~~~
+
+-  tttest
+
+Feature
+~~~~~~~
+
+-  test
 Change Log
 ----------
 
