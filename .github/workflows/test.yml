@@ -57,6 +57,7 @@ jobs:
       id: changelogs
       run: |
         git-chglog -o temp.md $(git describe --tags $(git rev-list --tags --max-count=1))
+        sed -i '' -e '$a\' temp.md > temp.md
         pandoc temp.md -f markdown_strict -t rst| cat - CHANGELOG.rst > temp && mv temp CHANGELOG.rst
 
     - name: Create Release
