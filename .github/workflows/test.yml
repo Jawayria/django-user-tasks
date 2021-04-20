@@ -73,8 +73,10 @@ jobs:
         draft: false
         prerelease: false
 
-    - name: delete temp file
-      run: rm temp.md
+    - name: delete temp files
+      run: |
+        rm temp.md
+        rm temp.rst
 
     - name: create pull request
       uses: peter-evans/create-pull-request@v3
