@@ -1,4 +1,4 @@
-mode: Mainline
+mode: ContinuousDelivery
 major-version-bump-message: '\s?(!docs|breaking|major|build)'
 minor-version-bump-message: '\s?(!docs|feature|feat|minor)'
 patch-version-bump-message: '\s?(!docs)'
