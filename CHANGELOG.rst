@@ -5,6 +5,7 @@ Docs
 ~~~~
 
 -  added new line in changelogs
+
 `7.0.2 <https://github.com/edx/django-user-tasks/compare/7.0.1...7.0.2>`__ (2021-04-20)
 ---------------------------------------------------------------------------------------
 
