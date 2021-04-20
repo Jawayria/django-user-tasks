@@ -3,7 +3,7 @@ name: changelogs
 on:
   push:
     branches:
-      - '**'
+      - 'master'
 
 jobs:
   update_changelogs:
