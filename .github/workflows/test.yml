@@ -27,11 +27,14 @@ jobs:
 
     - name: Determine Version
       id: gitversion
-      run: |
-        echo "::set-output name=version::$(cz bump --files-only | grep 'tag' | cut -d':' -f2-)"
-        cz bump --files-only | grep 'tag' | cut -d':' -f2-
+      run: echo "::set-output name=version::$(cz bump --files-only | grep 'tag' | cut -d':' -f2-)"
+
+    - name: Get Latest Tag
+      id: latesttag
+      run: echo "::set-output name=tag::$(git describe --tags --abbrev=0)"
 
     - name: Installing Homebrew
+      if: ${{ !contains(steps.gitversion.outputs.version,steps.latesttag.outputs.tag) }}
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
       run: |
@@ -42,23 +45,18 @@ jobs:
         echo "::add-path::/home/linuxbrew/.linuxbrew/bin"
 
     - name: Install git-chglog
+      if: ${{ !contains(steps.gitversion.outputs.version,steps.latesttag.outputs.tag) }}
       run: |
         brew tap git-chglog/git-chglog
         brew install git-chglog
 
     - name: Install pandoc
+      if: ${{ !contains(steps.gitversion.outputs.version,steps.latesttag.outputs.tag) }}
       run: brew install pandoc
-
-    - name: Get Latest Tag
-      id: latesttag
-      run: |
-        echo "::set-output name=tag::$(git describe --tags --abbrev=0)"
-        git describe --tags --abbrev=0
 
     - name: Tag the commit
       if: ${{ !contains(steps.gitversion.outputs.version,steps.latesttag.outputs.tag) }}
-      run: |
-        git tag ${{ steps.gitversion.outputs.version }}
+      run: git tag ${{ steps.gitversion.outputs.version }}
 
     - name: Get Changelog
       if: ${{ !contains(steps.gitversion.outputs.version,steps.latesttag.outputs.tag) }}
