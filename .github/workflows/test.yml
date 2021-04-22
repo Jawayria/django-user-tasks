@@ -28,8 +28,8 @@ jobs:
     - name: Determine Version
       id: gitversion
       run: |
-        echo "::set-output name=version::$(cz bump --dry-run | grep 'tag' | cut -d':' -f2-)"
-        cz bump --dry-run | grep 'tag' | cut -d':' -f2-
+        echo "::set-output name=version::$(cz bump --files-only | grep 'tag' | cut -d':' -f2-)"
+        cz bump --files-only | grep 'tag' | cut -d':' -f2-
 
     - name: Installing Homebrew
       env:
