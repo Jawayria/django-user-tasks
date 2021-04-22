@@ -1,3 +1,16 @@
+`8.1.3 <https://github.com/edx/django-user-tasks/compare/8.1.2...8.1.3>`__ (2021-04-22)
+---------------------------------------------------------------------------------------
+
+Docs
+~~~~
+
+-  Bump the Version and update Changelogs
+
+Fix
+~~~
+
+-  removed extras
+
 `8.1.2 <https://github.com/edx/django-user-tasks/compare/8.1.1...8.1.2>`__ (2021-04-22)
 ---------------------------------------------------------------------------------------
 
