@@ -56,9 +56,9 @@ jobs:
         git describe --tags --abbrev=0
 
     - name: Tag the commit
-      if: ${{ contains(steps.gitversion.outputs.version,steps.latesttag.outputs.tag) }}
+      if: ${{ !contains(steps.gitversion.outputs.version,steps.latesttag.outputs.tag) }}
       run: |
-        echo ${{ steps.gitversion.outputs.version == steps.latesttag.outputs.tag }} }}
+        echo ${{ steps.gitversion.outputs.version == steps.latesttag.outputs.tag }}
         echo ${{ steps.gitversion.outputs.version }}
         echo ${{ steps.latesttag.outputs.tag }}
         git tag ${{ steps.gitversion.outputs.version }}
