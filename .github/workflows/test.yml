@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-20.04
     outputs:
       output1: ${{ steps.gitversion.outputs.version }}
+      output2: ${{ steps.latesttag.outputs.tag }}
     steps:
 
     - uses: actions/checkout@v2
@@ -21,6 +22,13 @@ jobs:
       with:
         python-version: '3.8'
 
+    - name: Install commitizen
+      run: pip install -U commitizen
+
+    - name: Determine Version
+      id: gitversion
+      run: echo "::set-output name=version::$(cz bump --dry-run | grep 'tag' | cut -d':' -f2-)"
+
     - name: Installing Homebrew
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
@@ -30,27 +38,24 @@ jobs:
         test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
         echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
         echo "::add-path::/home/linuxbrew/.linuxbrew/bin"
-        brew --version
 
     - name: Install git-chglog
       run: |
         brew tap git-chglog/git-chglog
         brew install git-chglog
 
-    - name: Install commitizen
-      run: pip install -U commitizen
-
     - name: Install pandoc
       run: brew install pandoc
 
-    - name: Determine Version
-      id: gitversion
-      run: echo "::set-output name=version::$(cz bump --dry-run | grep 'tag' | cut -d':' -f2-)"
+    - name: Get Latest Tag
+      id: latesttag
+      run: |
+        echo "::set-output name=tag::$(git describe --tags --abbrev=0)"
+        echo ${{ steps.latesttag.outputs.tag }}
 
     - name: Tag the commit
-      run: |
-        echo "Version: ${{ steps.gitversion.outputs.version }}"
-        git tag ${{ steps.gitversion.outputs.version }}
+      if: ${{ steps.gitversion.outputs.version == steps.latesttag.outputs.tag }}
+      run: git tag ${{ steps.gitversion.outputs.version }}
 
     - name: Get Changelog
       id: changelogs
