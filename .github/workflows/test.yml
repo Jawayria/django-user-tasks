@@ -51,13 +51,13 @@ jobs:
       id: latesttag
       run: |
         echo "::set-output name=tag::$(git describe --tags --abbrev=0)"
-        echo ${{ steps.latesttag.outputs.tag }}
 
     - name: Tag the commit
-      if: ${{ steps.gitversion.outputs.version == steps.latesttag.outputs.tag }}
+      if: ${{ steps.gitversion.outputs.version != steps.latesttag.outputs.tag }}
       run: git tag ${{ steps.gitversion.outputs.version }}
 
     - name: Get Changelog
+      if: ${{ steps.gitversion.outputs.version != steps.latesttag.outputs.tag }}
       id: changelogs
       run: |
         git-chglog -o temp.md $(git describe --tags $(git rev-list --tags --max-count=1))
@@ -66,6 +66,7 @@ jobs:
         cat temp.rst CHANGELOG.rst > tmp && mv tmp CHANGELOG.rst
 
     - name: Create Release
+      if: ${{ steps.gitversion.outputs.version != steps.latesttag.outputs.tag }}
       id: create_release
       uses: actions/create-release@v1
       env:
@@ -78,11 +79,13 @@ jobs:
         prerelease: false
 
     - name: delete temp files
+      if: ${{ steps.gitversion.outputs.version != steps.latesttag.outputs.tag }}
       run: |
         rm temp.md
         rm temp.rst
 
     - name: create pull request
+      if: ${{ steps.gitversion.outputs.version != steps.latesttag.outputs.tag }}
       uses: peter-evans/create-pull-request@v3
       with:
         commit-message: 'docs: Bump the Version and update Changelogs'
