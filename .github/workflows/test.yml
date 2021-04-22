@@ -58,6 +58,7 @@ jobs:
     - name: Tag the commit
       if: ${{ steps.gitversion.outputs.version != steps.latesttag.outputs.tag }}
       run: |
+        echo ${{ steps.gitversion.outputs.version != steps.latesttag.outputs.tag }}
         echo ${{ steps.gitversion.outputs.version }}
         echo ${{ steps.latesttag.outputs.tag }}
         git tag ${{ steps.gitversion.outputs.version }}
