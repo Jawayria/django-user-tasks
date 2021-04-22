@@ -8,7 +8,8 @@ on:
 jobs:
   update_changelogs:
     runs-on: ubuntu-20.04
-
+    outputs:
+      output1: ${{ steps.gitversion.outputs.version }}
     steps:
 
     - uses: actions/checkout@v2
@@ -44,12 +45,12 @@ jobs:
 
     - name: Determine Version
       id: gitversion
-      run: cz bump --dry-run | grep "tag" | cut -d":" -f2-
+      run: echo "::set-output name=version::$(cz bump --dry-run | grep 'tag' | cut -d':' -f2-)"
 
     - name: Tag the commit
       run: |
-        echo "Version: ${{ steps.gitversion.outputs.MajorMinorPatch }}"
-        git tag ${{ steps.gitversion.outputs.MajorMinorPatch }}
+        echo "Version: ${{ steps.gitversion.outputs.version }}"
+        git tag ${{ steps.gitversion.outputs.version }}
 
     - name: Get Changelog
       id: changelogs
@@ -65,8 +66,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.gitversion.outputs.MajorMinorPatch }}
-        release_name: Release ${{ steps.gitversion.outputs.MajorMinorPatch }}
+        tag_name: ${{ steps.gitversion.outputs.version }}
+        release_name: Release ${{ steps.gitversion.outputs.version }}
         body_path: temp.md
         draft: false
         prerelease: false
