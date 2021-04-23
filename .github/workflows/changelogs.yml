@@ -91,5 +91,5 @@ jobs:
       uses: peter-evans/create-pull-request@v3
       with:
         commit-message: 'docs: Bump the Version and update Changelogs'
-        branch: update-changelogs-${{ steps.gitversion.outputs.version }}
-        title: Upgrade the version ${{ steps.gitversion.outputs.version }}
+        branch: update-changelogs-${{steps.gitversion.outputs.version}}
+        title: Upgrade the version ${{steps.gitversion.outputs.version}}
