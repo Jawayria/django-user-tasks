@@ -85,11 +85,3 @@ jobs:
       run: |
         rm temp.md
         rm temp.rst
-
-    - name: create pull request
-      if: ${{ !contains(steps.gitversion.outputs.version,steps.latesttag.outputs.tag) }}
-      uses: peter-evans/create-pull-request@v3
-      with:
-        commit-message: 'docs: Bump the Version and update Changelogs'
-        branch: update-changelogs
-        title: Upgrade the version
