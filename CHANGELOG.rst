@@ -1,3 +1,97 @@
+`8.2.0 <https://github.com/edx/django-user-tasks/compare/8.1.3...8.2.0>`__ (2021-04-22)
+---------------------------------------------------------------------------------------
+
+Build
+~~~~~
+
+-  try commitizen
+-  updated wprkflow
+-  updated event
+-  added pandoc in workflow
+-  added release step in workflow
+-  Added PR creation in Github workflow
+-  Add further steps for changelog generation
+-  added configuration file for git-chglog
+-  Added action to test tools
+
+Config
+~~~~~~
+
+-  updated mode
+-  updated configuration
+-  Testing Mainline mode
+-  Added config file
+
+Docs
+~~~~
+
+-  Bump the Version and update Changelogs
+-  Bump the Version and update Changelogs
+-  Bump the Version and update Changelogs
+-  Bump the Version and update Changelogs
+-  resolved error in logs
+-  Bump the Version and update Changelogs
+-  added new line in changelogs
+-  Bump the Version and update Changelogs
+-  updated changelogs
+-  Bump the Version and update Changelogs
+-  resolved error in logs
+-  Bump the Version and update Changelogs
+-  update
+-  tttest
+-  Added change5.rst
+-  Added change2.rst
+-  added changelog.md
+-  added changelog files
+
+Feature
+~~~~~~~
+
+-  test
+
+Fix
+~~~
+
+-  removed extras
+-  correction
+-  updated all conditions
+-  added print line
+-  added condition in all following steps
+-  Added condition
+-  updated outputs
+-  resolving docs test failure
+-  add new line
+-  added command to append new line at the end of temp.md
+-  updated the path for release notes
+-  update the path for release notes
+-  Append new logs in the beginning of file
+-  Corrected the command
+-  Corrected the branch name
+-  Fixing the create PR step
+-  Resolve error
+-  set fetch-depth:0
+-  Updated the step
+-  Removed extra step
+-  resolved error
+-  set up env
+-  updated the workflow to checkout the target branch
+   (`#119 <https://github.com/edx/django-user-tasks/issues/119>`__)
+
+Fix
+~~~
+
+-  Update the steps
+
+Refactor
+~~~~~~~~
+
+-  add print statements
+
+Style
+~~~~~
+
+-  updated the changelogs template
+
 `8.1.3 <https://github.com/edx/django-user-tasks/compare/8.1.2...8.1.3>`__ (2021-04-22)
 ---------------------------------------------------------------------------------------
 
